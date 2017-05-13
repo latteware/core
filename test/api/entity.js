@@ -128,4 +128,29 @@ describe('/entity', () => {
       expect(body.data.gender).equal('male')
     })
   })
+
+  describe.only('get', (done) => {
+    it('should return entity from writers', function * () {
+      const firstWriter = yield createWriter({meta: {contact: 'f@f.com'}})
+      const secondWriter = yield createWriter({meta: {contact: 's@s.com'}})
+      const thirdWriter = yield createWriter({meta: {contact: 't@t.com'}})
+      const entity = yield Entity.create({
+        createdBy: writer.uuid,
+        originalData: {name: 'Daniel'},
+        type: 'insurance-policy'
+      })
+      yield entity.createAction(firstWriter, {address: '42 Wallaby Way, Sydney'})
+      yield entity.createAction(secondWriter, {address: '43 Wallaby Way, Sydney', gender: 'male'})
+      yield entity.createAction(thirdWriter, {address: '44 Wallaby Way, Sydney', gender: 'female'})
+
+      const { body } = yield agent.get(`/api/entity/${entity.uuid}/writers`)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
+
+      expect(body.length).equal(3)
+      expect(body[0].meta.contact).equal('f@f.com')
+      expect(body[1].meta.contact).equal('s@s.com')
+      expect(body[2].meta.contact).equal('t@t.com')
+    })
+  })
 })
