@@ -35,7 +35,8 @@ describe('/action', () => {
     it('should return list', function * () {
       const entity = yield Entity.create({
         createdBy: writer.uuid,
-        originalData: {name: 'Daniel'}
+        originalData: {name: 'Daniel'},
+        type: 'insurance-policy'
       })
       yield entity.createAction(writer, {address: '42 Wallaby Way, Sydney'})
       yield entity.createAction(writer, {birthday: new Date('2003-07-04T05:00:00.000Z')})

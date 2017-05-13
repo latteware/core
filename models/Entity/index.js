@@ -8,9 +8,11 @@ const methods = require('./methods')
 const entitySchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   createdBy: { type: String, required: true },
+  type: { type: String, required: true },
 
   uuid: { type: String, default: v4 },
 
+  meta: Schema.Types.Mixed,
   originalData: Schema.Types.Mixed
 })
 

@@ -7,6 +7,7 @@ const methods = require('./methods')
 
 const writerSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
+  meta: Schema.Types.Mixed,
 
   uuid: { type: String, default: v4 },
   token: { type: String, default: v4 }

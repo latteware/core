@@ -1,5 +1,6 @@
 const Entity = require('models/Entity')
 const Action = require('models/Action')
+const _ = require('lodash')
 
 module.exports = {
   method: 'get',
@@ -27,12 +28,13 @@ module.exports = {
 
     var data = entity.originalData
     actions.forEach(a => {
-      data = Object.assign(data, a.data)
+      data = _.merge(data, a.data)
     })
 
     this.body = {
       createdBy: entity.createdBy,
       uuid: entity.uuid,
+      meta: entity.meta,
       data
     }
   }

@@ -1,8 +1,9 @@
 const Joi = require('koa-joi-router').Joi
-const Writer = require('models/Writer')
+const _ = require('lodash')
+const hasWriter = require('lib/middlewares/hasWriter')
 
 module.exports = {
-  method: 'post',
+  method: 'put',
   path: '/',
   validate: {
     body: {
@@ -10,14 +11,17 @@ module.exports = {
     },
     type: 'json'
   },
-  handler: function * () {
+  handler: [hasWriter, function * () {
     const { meta } = this.request.body
-    const writer = yield Writer.create({meta})
+    const writer = this.state.writer
+
+    writer.meta = _.merge(writer.meta, meta)
+    yield writer.save()
 
     this.body = {
       uuid: writer.uuid,
       token: writer.token,
       meta: writer.meta
     }
-  }
+  }]
 }

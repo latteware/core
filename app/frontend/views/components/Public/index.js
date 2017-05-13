@@ -32,7 +32,7 @@ export default class Public extends Component {
         <nav className='nav'>
           <div className='nav-left'>
             <Link className='nav-item' to='/'>
-              <img src='http://bulma.io/images/bulma-logo.png' alt='Bulma logo' />
+              CORE
             </Link>
           </div>
 

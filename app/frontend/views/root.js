@@ -6,26 +6,8 @@ import routes from './routes'
 import { sessionActions } from 'core/session'
 
 class Root extends React.Component {
-  componentDidMount () {
-    const { getCurrentUser } = this.props
-
-    getCurrentUser()
-  }
-
   render () {
-    const { history, store, loaded, loadError } = this.props
-
-    if (loadError) {
-      return (<div>
-        { loadError.status }:{ loadError.message }
-      </div>)
-    }
-
-    if (!loaded) {
-      return (<div>
-        Loading...
-      </div>)
-    }
+    const { history, store } = this.props
 
     return (
       <Provider store={store}>

@@ -18,14 +18,33 @@ describe('/entity', () => {
   })
 
   describe('post', (done) => {
-    it('should return list', function * () {
+    it('should return create entity with data and type', function * () {
       const { body } = yield agent.post('/api/entity')
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
-      .send({data: {name: 'Daniel'}})
+      .send({data: {name: 'Daniel'}, type: 'insurance-policy'})
 
       expect(body.uuid.length).equal(36)
       expect(body.originalData.name).equal('Daniel')
+    })
+  })
+
+  describe('post', (done) => {
+    it('should return create entity with type and meta data', function * () {
+      const { body } = yield agent.post('/api/entity')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
+      .send({
+        type: 'insurance-policy',
+        meta: {
+          externalId: '64232441633d4b569ce11d99f2dcc4f5'
+        },
+        data: {name: 'Daniel'}
+      })
+
+      expect(body.uuid.length).equal(36)
+      expect(body.originalData.name).equal('Daniel')
+      expect(body.meta.externalId).equal('64232441633d4b569ce11d99f2dcc4f5')
     })
   })
 
@@ -33,7 +52,8 @@ describe('/entity', () => {
     it('should return simple entity', function * () {
       const entity = yield Entity.create({
         createdBy: writer.uuid,
-        originalData: {name: 'Daniel'}
+        originalData: {name: 'Daniel'},
+        type: 'hospital'
       })
 
       const { body } = yield agent.get(`/api/entity/${entity.uuid}`)
@@ -48,7 +68,8 @@ describe('/entity', () => {
     it('should return entity with name, address and birthday', function * () {
       const entity = yield Entity.create({
         createdBy: writer.uuid,
-        originalData: {name: 'Daniel'}
+        originalData: {name: 'Daniel'},
+        type: 'insurance-policy'
       })
       yield entity.createAction(writer, {address: '42 Wallaby Way, Sydney'})
       yield entity.createAction(writer, {birthday: new Date('2003-07-04T05:00:00.000Z')})
@@ -69,7 +90,8 @@ describe('/entity', () => {
       const secondWriter = yield createWriter()
       const entity = yield Entity.create({
         createdBy: writer.uuid,
-        originalData: {name: 'Daniel'}
+        originalData: {name: 'Daniel'},
+        type: 'insurance-policy'
       })
       yield entity.createAction(firstWriter, {address: '42 Wallaby Way, Sydney'})
       yield entity.createAction(secondWriter, {address: '43 Wallaby Way, Sydney'})
@@ -90,7 +112,8 @@ describe('/entity', () => {
       const thirdWriter = yield createWriter()
       const entity = yield Entity.create({
         createdBy: writer.uuid,
-        originalData: {name: 'Daniel'}
+        originalData: {name: 'Daniel'},
+        type: 'insurance-policy'
       })
       yield entity.createAction(firstWriter, {address: '42 Wallaby Way, Sydney'})
       yield entity.createAction(secondWriter, {address: '43 Wallaby Way, Sydney', gender: 'male'})
