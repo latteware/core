@@ -14,7 +14,6 @@ module.exports = function api (app) {
     rtr.prefix(pfix)
 
     debug('api')(`Adding resource ${pfix}`)
-    console.log('=>', middlewares, pfix)
     forEach(middlewares, mdw => {
       rtr.use(mdw)
     })
