@@ -6,7 +6,7 @@ const mount = require('koa-mount')
 const serve = require('koa-static')
 const convert = require('koa-convert')
 const views = require('koa-nunjucks-next')
-const routers = require('./routers')
+// const routers = require('./routers')
 const { render, errorHandler } = require('lib/middlewares')
 
 const { webpack, server, env } = config
@@ -29,7 +29,7 @@ if (env !== 'test') {
 app.use(convert(errorHandler))
 
 // routers
-routers(app)
+// routers(app)
 
 // frontend
 app.use(convert(render))
