@@ -15,7 +15,7 @@ describe('/writer', () => {
   })
 
   describe('post', (done) => {
-    it('should retuna list', function * () {
+    it('should return list', function * () {
       const { body } = yield agent.post('/api/writer')
       .set('Content-Type', 'application/json')
 
