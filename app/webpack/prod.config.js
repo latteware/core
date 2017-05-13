@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const config = require('../config').webpack
+const config = require('../../config').webpack
 
 module.exports = {
   entry: './app/frontend/index.js',
