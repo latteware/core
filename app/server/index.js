@@ -7,7 +7,7 @@ const serve = require('koa-static')
 const convert = require('koa-convert')
 const views = require('koa-nunjucks-next')
 const routers = require('./routers')
-const { render, errorHandler, getRequestData } = require('lib/middlewares')
+const { render, errorHandler } = require('lib/middlewares')
 
 const { webpack, server, env } = config
 const app = new Koa()
@@ -27,9 +27,6 @@ if (env !== 'test') {
 
 // Error handler
 app.use(convert(errorHandler))
-
-// Get Request data
-app.use(convert(getRequestData))
 
 // routers
 routers(app)

@@ -4,25 +4,23 @@ require('co-supertest')
 const { expect } = require('chai')
 const http = require('http')
 const request = require('supertest')
-const { clearDatabase, authUser } = require('../utils')
+const { clearDatabase } = require('../utils')
 const api = require('api/')
 
-describe('/users', () => {
+describe('/writer', () => {
   const agent = request.agent(http.createServer(api.callback()))
-  var jwt
 
   before(function * () {
     yield clearDatabase()
-    jwt = yield authUser(agent)
   })
 
   describe('post', (done) => {
     it('should retuna list', function * () {
-      const { body } = yield agent.get('/api/users')
+      const { body } = yield agent.post('/api/writer')
       .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${jwt}`)
-      expect(body.total).equal(1)
-      expect(body.users.length).equal(1)
+
+      expect(body.uuid.length).equal(36)
+      expect(body.token.length).equal(36)
     })
   })
 })

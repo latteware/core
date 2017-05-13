@@ -5,16 +5,16 @@ const { v4 } = require('uuid')
 const statics = require('./statics')
 const methods = require('./methods')
 
-const sessionSchema = new Schema({
+const entitySchema = new Schema({
   createdAt: { type: Date, default: Date.now },
+  createdBy: { type: String, required: true },
 
   uuid: { type: String, default: v4 },
-  apiToken: { type: String, default: v4 },
 
-  user: {type: Schema.Types.ObjectId, ref: 'User'}
+  originalData: Schema.Types.Mixed
 })
 
-extend(sessionSchema.statics, statics)
-extend(sessionSchema.methods, methods)
+extend(entitySchema.statics, statics)
+extend(entitySchema.methods, methods)
 
-module.exports = mongoose.model('Session', sessionSchema)
+module.exports = mongoose.model('Entity', entitySchema)

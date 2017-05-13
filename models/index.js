@@ -1,5 +1,7 @@
-const User = require('./User')
+const Writer = require('./Writer')
+const Entity = require('./Entity')
 
 module.exports = {
-  User
+  Writer,
+  Entity
 }

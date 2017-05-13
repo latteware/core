@@ -6,7 +6,7 @@ const convert = require('koa-convert')
 const cors = require('koa-cors')
 
 const routers = require('./routers')
-const { errorHandler, getRequestData } = require('lib/middlewares')
+const { errorHandler } = require('lib/middlewares')
 
 const { env } = config
 const app = new Koa()
@@ -21,9 +21,6 @@ app.use(convert(cors()))
 
 // Error handler
 app.use(convert(errorHandler))
-
-// Get Request data
-app.use(convert(getRequestData))
 
 // api
 routers(app)
