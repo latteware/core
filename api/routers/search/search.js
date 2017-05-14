@@ -19,7 +19,7 @@ module.exports = {
     if (type) { query.type = type }
     if (meta) { _.forEach(meta, (v, k) => { query[`meta.${k}`] = v }) }
 
-    const entities = yield Entity.find(query).select('type meta createdBy -_id')
+    const entities = yield Entity.find(query).select('type meta createdBy -_id uuid')
 
     this.body = entities
   }

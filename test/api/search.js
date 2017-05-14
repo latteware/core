@@ -25,6 +25,18 @@ describe('/search', () => {
   })
 
   describe('post', (done) => {
+    it('should return all entities', function * () {
+      const { body } = yield agent.post('/api/search')
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
+      .send({})
+
+      expect(body.length).equal(3)
+      expect(body[0].uuid.length).equal(36)
+    })
+  })
+
+  describe('post', (done) => {
     it('should search by type', function * () {
       const { body } = yield agent.post('/api/search')
       .set('Content-Type', 'application/json')
@@ -32,6 +44,7 @@ describe('/search', () => {
       .send({type: 'insurance-policy'})
 
       expect(body.length).equal(2)
+      expect(body[0].uuid.length).equal(36)
     })
   })
 
@@ -43,6 +56,7 @@ describe('/search', () => {
       .send({meta: {externalId: '46'}})
 
       expect(body.length).equal(1)
+      expect(body[0].uuid.length).equal(36)
     })
   })
 
@@ -54,6 +68,7 @@ describe('/search', () => {
       .send({type: 'insurance-policy', meta: {city: 'Mexico city'}})
 
       expect(body.length).equal(1)
+      expect(body[0].uuid.length).equal(36)
     })
   })
 })
