@@ -54,4 +54,16 @@ describe('/writer', () => {
       expect(body.meta.name).equal('Daniel Zavala')
     })
   })
+
+  describe('get', (done) => {
+    it('should verify', function * () {
+      const writer = yield Writer.create({})
+
+      const { body } = yield agent.get(`/api/writer/verify`)
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
+
+      expect(body.success).equal(true)
+    })
+  })
 })

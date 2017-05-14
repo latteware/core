@@ -129,7 +129,7 @@ describe('/entity', () => {
     })
   })
 
-  describe.only('get', (done) => {
+  describe('get', (done) => {
     it('should return entity from writers', function * () {
       const firstWriter = yield createWriter({meta: {contact: 'f@f.com'}})
       const secondWriter = yield createWriter({meta: {contact: 's@s.com'}})
