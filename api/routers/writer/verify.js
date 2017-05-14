@@ -1,7 +1,7 @@
 const hasWriter = require('lib/middlewares/hasWriter')
 
 module.exports = {
-  method: 'get',
+  method: 'post',
   path: '/verify',
   handler: [hasWriter, function * () {
     this.body = {

@@ -56,14 +56,14 @@ describe('/writer', () => {
   })
 
   describe('get', (done) => {
-    it('should verify', function * () {
-      const writer = yield Writer.create({})
+    it('should get writer metadata', function * () {
+      const writer = yield Writer.create({meta: {'contact': 'siedrix@gmail.com'}})
 
-      const { body } = yield agent.get(`/api/writer/verify`)
+      const { body } = yield agent.get(`/api/writer/${writer.uuid}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', `Bearer ${writer.uuid}:${writer.token}`)
 
-      expect(body.success).equal(true)
+      expect(body.meta.contact).equal('siedrix@gmail.com')
     })
   })
 })
